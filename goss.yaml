@@ -1,0 +1,213 @@
+file:
+  /bin:
+    exists: true
+    mode: "0777"
+    owner: root
+    group: root
+    linked-to: usr/bin
+    filetype: symlink
+    contains: []
+  /etc/audit/auditd.conf:
+    exists: true
+    mode: "0640"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/group:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/gshadow:
+    exists: true
+    mode: "0000"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/login.defs:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains:
+    - /^\s*PASS_MIN_LEN\s+5\s*$/
+    - /^\s*PASS_MIN_DAYS\s+1\s*$/
+    - /^\s*PASS_MAX_DAYS\s+90\s*$/
+    - /^\s*PASS_WARN_AGE\s+7\s*$/
+    - /^\s*UMASK\s+077\s*$/
+  /etc/passwd:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/rsyslog.conf:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/shadow:
+    exists: true
+    mode: "0000"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/ssh/sshd_config:
+    exists: true
+    mode: "0600"
+    owner: root
+    group: root
+    filetype: file
+    contains:
+      - /^\s*PermitEmptyPasswords\s+no\s*/
+#      - /^\s*HostbasedAuthentication\s+no\s*/
+  /lib:
+    exists: true
+    mode: "0777"
+    owner: root
+    group: root
+    linked-to: usr/lib
+    filetype: symlink
+    contains: []
+  /lib64:
+    exists: true
+    mode: "0777"
+    owner: root
+    group: root
+    linked-to: usr/lib64
+    filetype: symlink
+    contains: []
+  /sbin:
+    exists: true
+    mode: "0777"
+    owner: root
+    group: root
+    linked-to: usr/sbin
+    filetype: symlink
+    contains: []
+  /usr/bin:
+    exists: true
+    mode: "0555"
+    owner: root
+    group: root
+    filetype: directory
+    contains: []
+  /usr/lib:
+    exists: true
+    mode: "0555"
+    owner: root
+    group: root
+    filetype: directory
+    contains: []
+  /usr/lib64:
+    exists: true
+    mode: "0555"
+    owner: root
+    group: root
+    filetype: directory
+    contains: []
+  /usr/local/bin:
+    exists: true
+    mode: "0755"
+    owner: root
+    group: root
+    filetype: directory
+    contains: []
+  /usr/local/sbin:
+    exists: true
+    mode: "0755"
+    owner: root
+    group: root
+    filetype: directory
+    contains: []
+  /usr/sbin:
+    exists: true
+    mode: "0555"
+    owner: root
+    group: root
+    filetype: directory
+    contains: []
+  /var/log/audit:
+    exists: true
+    mode: "0700"
+    size: 99
+    owner: root
+    group: root
+    filetype: directory
+    contains: []
+  /var/log/audit/audit.log:
+    exists: true
+    mode: "0600"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+package:
+  autofs:
+    installed: false
+  sendmail:
+    installed: false
+service:
+  tftp:
+    enabled: false
+    running: false
+  abrtd:
+    enabled: false
+    running: false
+  auditd:
+    enabled: true
+    running: true
+  autofs:
+    enabled: false
+    running: false
+  avahi-daemon:
+    enabled: false
+    running: false
+  bluetooth:
+    enabled: false
+    running: false
+  iptables:
+    enabled: true
+    running: true
+  ntpd:
+    enabled: true
+    running: true
+  ntpdate:
+    enabled: false
+    running: false
+  oddjobd:
+    enabled: false
+    running: false
+  qpidd:
+    enabled: false
+    running: false
+  rdisc:
+    enabled: false
+    running: false
+command:
+  pwck -rq:
+    exit-status: 0
+    stdout: []
+    stderr: []
+    timeout: 0
+kernel-param:
+  net.ipv4.conf.all.accept_redirects:
+    value: "0"
+  net.ipv4.conf.all.accept_source_route:
+    value: "0"
+  net.ipv4.conf.all.secure_redirects:
+    value: "1"
+mount:
+  /home:
+    exists: true
+  /var:
+    exists: true
