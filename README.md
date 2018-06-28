@@ -4,4 +4,6 @@ At attempt to recreate [DISA STIG](https://iase.disa.mil/stigs/os/unix-linux/Pag
 Some data from https://github.com/aaron868/security-audit
 
 To use it, get goss binary from https://github.com/aelsabbahy/goss/ and run:
-```goss goss.yaml``
+```
+goss goss.yaml
+```

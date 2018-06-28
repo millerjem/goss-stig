@@ -315,6 +315,14 @@ kernel-param:
     value: "1"
   net.ipv4.conf.all.log_martians:
     value: "1"
+  net.ipv4.icmp_echo_ignore_broadcasts:
+    value: "1"
+  net.ipv4.icmp_ignore_bogus_error_responses:
+    value: "1"
+  net.ipv4.tcp_syncookies:
+    value: "1"
+  net.ipv4.conf.all.rp_filter:
+    value: "1"
 mount:
   /dev/shm:
     exists: true
