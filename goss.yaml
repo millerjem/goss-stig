@@ -7,9 +7,58 @@ file:
     linked-to: usr/bin
     filetype: symlink
     contains: []
+  /boot/grub2/grub.cfg:
+    exists: true
+    mode: "0600"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
   /etc/audit/auditd.conf:
     exists: true
     mode: "0640"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /etc/cron.d:
+    exists: true
+    mode: "0755"
+    owner: root
+    group: root
+    filetype: directory
+    contains: []
+  /etc/cron.daily:
+    exists: true
+    mode: "0755"
+    owner: root
+    group: root
+    filetype: directory
+    contains: []
+  /etc/cron.hourly:
+    exists: true
+    mode: "0755"
+    owner: root
+    group: root
+    filetype: directory
+    contains: []
+  /etc/cron.monthly:
+    exists: true
+    mode: "0755"
+    owner: root
+    group: root
+    filetype: directory
+    contains: []
+  /etc/cron.weekly:
+    exists: true
+    mode: "0755"
+    owner: root
+    group: root
+    filetype: directory
+    contains: []
+  /etc/crontab:
+    exists: true
+    mode: "0600"
     owner: root
     group: root
     filetype: file
@@ -27,6 +76,9 @@ file:
     owner: root
     group: root
     filetype: file
+    contains: []
+  /etc/hosts.equiv:
+    exists: false
     contains: []
   /etc/login.defs:
     exists: true
@@ -46,14 +98,20 @@ file:
     owner: root
     group: root
     filetype: file
-    contains: []
   /etc/rsyslog.conf:
     exists: true
     mode: "0644"
     owner: root
     group: root
     filetype: file
-    contains: []
+  /etc/securetty:
+    exists: true
+    mode: "0600"
+    owner: root
+    group: root
+    filetype: file
+    contains:
+      - "!/vc/[0-9]/"
   /etc/shadow:
     exists: true
     mode: "0000"
@@ -68,8 +126,21 @@ file:
     group: root
     filetype: file
     contains:
-      - /^\s*PermitEmptyPasswords\s+no\s*/
-#      - /^\s*HostbasedAuthentication\s+no\s*/
+    - /^\s*(?i:PermitEmptyPasswords)\s+no\s*$/
+    - /^\s*(?i:X11Forwarding)\s+no\s*$/
+    - /^\s*(?i:MaxAuthTries)\s+[123456]\s*$/
+    - /^\s*(?i:IgnoreRhosts)\s+yes\s*$/
+    - /^\s*(?i:HostbasedAuthentication)\s+no\s*$/
+    - /^\s*(?i:PermitRootLogin)\s+(?:without-password|no)\s*$/
+    - /^\s*(?i:PermitEmptyPasswords)\s+no\s*$/
+  /etc/yum.conf:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains:
+    - /^\s*gpgcheck\s*=\s*1\s*$/
   /lib:
     exists: true
     mode: "0777"
@@ -139,7 +210,6 @@ file:
   /var/log/audit:
     exists: true
     mode: "0700"
-    size: 99
     owner: root
     group: root
     filetype: directory
@@ -154,12 +224,39 @@ file:
 package:
   autofs:
     installed: false
+  avahi:
+    installed: false
+  cups:
+    installed: false
+  dhcp:
+    installed: false
+  rsh:
+    installed: false
+  rsh-server:
+    installed: false
+  rsyslog:
+    installed: true
+  samba:
+    installed: false
+  samba-client:
+    installed: false
   sendmail:
     installed: false
-service:
+  talk:
+    installed: false
+  talk-server:
+    installed: false
+  telnet-server:
+    installed: false
   tftp:
-    enabled: false
-    running: false
+    installed: false
+  tftp-server:
+    installed: false
+  yp-tools:
+    installed: false
+  ypbind:
+    installed: false
+service:
   abrtd:
     enabled: false
     running: false
@@ -193,6 +290,12 @@ service:
   rdisc:
     enabled: false
     running: false
+  rsyslog:
+    enabled: true
+    running: true
+  tftp:
+    enabled: false
+    running: false
 command:
   pwck -rq:
     exit-status: 0
@@ -200,6 +303,10 @@ command:
     stderr: []
     timeout: 0
 kernel-param:
+  fs.suid_dumpable:
+    value: "0"
+  kernel.randomize_va_space:
+    value: "2"
   net.ipv4.conf.all.accept_redirects:
     value: "0"
   net.ipv4.conf.all.accept_source_route:
@@ -207,6 +314,11 @@ kernel-param:
   net.ipv4.conf.all.secure_redirects:
     value: "1"
 mount:
+  /dev/shm:
+    exists: true
+    opts:
+    - nodev
+    - nosuid
   /home:
     exists: true
   /var:
