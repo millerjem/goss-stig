@@ -313,6 +313,8 @@ kernel-param:
     value: "0"
   net.ipv4.conf.all.secure_redirects:
     value: "1"
+  net.ipv4.conf.all.log_martians:
+    value: "1"
 mount:
   /dev/shm:
     exists: true
