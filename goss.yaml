@@ -252,6 +252,8 @@ package:
     installed: false
   tftp-server:
     installed: false
+  xinetd:
+    installed: false
   yp-tools:
     installed: false
   ypbind:
