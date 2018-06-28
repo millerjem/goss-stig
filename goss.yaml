@@ -258,6 +258,8 @@ package:
     installed: false
   ypbind:
     installed: false
+  ypserv:
+    installed: false
 service:
   abrtd:
     enabled: false
@@ -292,10 +294,25 @@ service:
   rdisc:
     enabled: false
     running: false
+  rlogin:
+    enabled: false
+    running: false
+  rexec:
+    enabled: false
+    running: false
+  rsh:
+    enabled: false
+    running: false
   rsyslog:
     enabled: true
     running: true
+  telnet:
+    enabled: false
+    running: false
   tftp:
+    enabled: false
+    running: false
+  ypbind:
     enabled: false
     running: false
 command:
@@ -325,6 +342,8 @@ kernel-param:
     value: "1"
   net.ipv4.conf.all.rp_filter:
     value: "1"
+  net.ipv4.conf.all.send_redirects:
+    value: "0"
 mount:
   /dev/shm:
     exists: true
