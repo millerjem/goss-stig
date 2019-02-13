@@ -21,48 +21,6 @@ file:
     group: root
     filetype: file
     contains: []
-  /etc/cron.d:
-    exists: true
-    mode: "0755"
-    owner: root
-    group: root
-    filetype: directory
-    contains: []
-  /etc/cron.daily:
-    exists: true
-    mode: "0755"
-    owner: root
-    group: root
-    filetype: directory
-    contains: []
-  /etc/cron.hourly:
-    exists: true
-    mode: "0755"
-    owner: root
-    group: root
-    filetype: directory
-    contains: []
-  /etc/cron.monthly:
-    exists: true
-    mode: "0755"
-    owner: root
-    group: root
-    filetype: directory
-    contains: []
-  /etc/cron.weekly:
-    exists: true
-    mode: "0755"
-    owner: root
-    group: root
-    filetype: directory
-    contains: []
-  /etc/crontab:
-    exists: true
-    mode: "0600"
-    owner: root
-    group: root
-    filetype: file
-    contains: []
   /etc/group:
     exists: true
     mode: "0644"
@@ -133,6 +91,11 @@ file:
     - /^\s*(?i:HostbasedAuthentication)\s+no\s*$/
     - /^\s*(?i:PermitRootLogin)\s+(?:without-password|no)\s*$/
     - /^\s*(?i:PermitEmptyPasswords)\s+no\s*$/
+
+# V-71981: The operating system must prevent the installation of software,
+# patches, service packs, device drivers, or operating system components of
+# packages without verification of the repository metadata.
+#
   /etc/yum.conf:
     exists: true
     mode: "0644"
@@ -141,6 +104,10 @@ file:
     filetype: file
     contains:
     - /^\s*gpgcheck\s*=\s*1\s*$/
+    - /^\s*repo_gpgcheck\s*=\s*1\s*$/
+    - /^\s*localpkg_gpgcheck\s*=\s*1\s*$/
+    - /^\s*clean_requirements_on_remove\s*=\s*1\s*$/
+
   /lib:
     exists: true
     mode: "0777"
@@ -230,10 +197,21 @@ package:
     installed: false
   dhcp:
     installed: false
+
+# V-71989: The operating system must enable SELinux.
+# Here we check that the needed package is installed.
+#
+  libselinux-utils:
+    installed: true
+
   rsh:
     installed: false
+
+  # V-71967: The rsh-server package must not be installed.
+  #
   rsh-server:
     installed: false
+
   rsyslog:
     installed: true
   samba:
@@ -248,6 +226,10 @@ package:
     installed: false
   telnet-server:
     installed: false
+
+  # V-72301: The Trivial File Transfer Protocol (TFTP) server package must not
+  # be installed if not required for operational support.
+  #
   tftp:
     installed: false
   tftp-server:
@@ -258,8 +240,12 @@ package:
     installed: false
   ypbind:
     installed: false
+
+# V-71969: The ypserv package must not be installed.
+#
   ypserv:
     installed: false
+
 service:
   abrtd:
     enabled: false
@@ -323,11 +309,19 @@ command:
     timeout: 0
 
 # V-72005: The root account must be the only account having unrestricted access to the system.
+#
   awk -F ':' '$1!="root" && $3=="0" {exit 1}' < /etc/passwd:
     exit-status: 0
     timeout: 3000
     stdout: []
     stderr: []
+
+# V-71989: The operating system must enable SELinux.
+#
+  getenforce:
+    exit-status: 0
+    stdout:
+      - Enforcing
 
 kernel-param:
   fs.suid_dumpable:
