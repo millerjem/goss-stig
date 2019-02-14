@@ -50,6 +50,37 @@ file:
     - /^\s*PASS_MAX_DAYS\s+90\s*$/
     - /^\s*PASS_WARN_AGE\s+7\s*$/
     - /^\s*UMASK\s+077\s*$/
+
+# V-81003: The Red Hat Enterprise Linux operating system must be configured so
+# that /etc/pam.d/passwd implements /etc/pam.d/system-auth when changing
+# passwords.
+#
+  /etc/pam.d/passwd:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains:
+      - /^\s*password\s+substack\s+system-auth/
+
+# V-73159: The Red Hat Enterprise Linux operating system must be configured so
+# that when passwords are changed or new passwords are established, pwquality
+# must be used.
+#
+  /etc/pam.d/system-auth:
+    exists: true
+    linked-to: system-auth-ac
+    filetype: symlink
+  /etc/pam.d/system-auth-ac:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains:
+      - /^\s*password\s+required\s+pam_pwquality.so\s+retry=3/
+
   /etc/passwd:
     exists: true
     mode: "0644"
